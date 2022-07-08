@@ -343,9 +343,9 @@ def editar_perfil(request):
   
 @login_required
 def agregar_avatar(request):
-    
+
     if request.method == "POST":
-            
+
         form = AvatarForm(request.POST, request.FILES)
 
         if form.is_valid():
@@ -361,8 +361,8 @@ def agregar_avatar(request):
 
     else:
         form = AvatarForm()
-    
-    return render(request,"productos",{"form":form})
+
+    return render(request,"comercioApp/agregar_avatar.html",{"form":form})
 
 @login_required
 def agregar_comentario(request,producto_id):
@@ -373,12 +373,14 @@ def agregar_comentario(request,producto_id):
       if formulario.is_valid():
         info = formulario.cleaned_data
       
-      comentario = Comentario(autor=user,producto=producto,body=info["body"])
+      comentario = Comentario(autor=user,producto=producto,body=info["comentario"])
       comentario.save()
-      return redirect("comercioApp/verProducto.html")
+
+      return redirect("verproducto", producto_id)
+
     else:
+
       form = FormularioComentario()
+
       return render(request,"comercioApp/agregar_comentario.html",{"form":form})
     
-    
-    # 
